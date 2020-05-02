@@ -1,0 +1,115 @@
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.headroom {
+    will-change: transform;
+    transition: transform 200ms linear;
+}
+
+.headroom--pinned {
+    transform: translateY(0%);
+    background-image: linear-gradient(0deg, rgba(36, 43, 51, 0) 0%, $secondary-color 60%);
+}
+
+.headroom--unpinned {
+    transform: translateY(-100%);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: inline-block;
+    position: relative;
+    z-index: 3;
+    & svg {
+        @include tr;
+        fill: $body-color;
+        transform: scale(.8);
+    }
+    @include hover {
+        svg {
+            fill: $primary-color;
+        }
+    }
+}
+
+.toggler {
+    padding: 1em;
+    display: inline-block;
+    position: relative;
+    z-index: 3;
+    & svg {
+        fill: $primary-color;
+    }
+    @media screen and (min-width: 992px) {
+        display: none;
+    }
+}
+
+.dropdown {
+    will-change: transform;
+    padding: 50px 0 0;
+    @include posA($top: 0, $left: null, $delta_x: null, $delta_y: null);
+    right: 0; 
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background-color: $secondary-color;
+    opacity: 0;
+    transform-origin: calc(100% - 15px) 15px;
+    transform: translate(0, 0) scale(.1);
+    border-radius: 50vw;
+    @include tr(.5s);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .menu-opened & {
+        z-index: 2;
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+        border-radius: 0;
+    }
+    @media screen and (min-width: 992px) {
+        position: relative;
+        background-color: transparent;
+        flex-direction: row;
+        width: auto;
+        height: auto;
+        padding: 0;
+        z-index: 2;
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+.menu {
+    margin: 0;
+    list-style: none;
+    &__link {
+        padding: .25em 0;
+        display: inline-block;
+        color: $body-color;
+        text-decoration: none;
+        font-size: 1.2em;
+        @include hover {
+            color: $primary-color;
+        }
+        .dropdown & {
+            padding: 1em;
+        }
+    }
+}
+
+.menu-opened {
+    overflow: hidden;
+}
